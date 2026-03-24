@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Live GPS tracking for all school buses in real-time">
+    <title>Live Tracking - BusTracker Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .tracking-page { padding-top: 80px; min-height: 100vh; }
+        .tracking-header { padding: 2rem 0; }
+        .tracking-header h1 { margin-bottom: 0.5rem; }
+        .tracking-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .stat-box { padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); }
+        .stat-box .stat-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .stat-box .stat-label { color: var(--text-secondary); font-size: 0.875rem; }
+        .tracking-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+        .map-container { background: rgba(255,255,255,0.05); border-radius: 1.5rem; border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; min-height: 600px; }
+        .map-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .map-header h2 { font-size: 1.25rem; }
+        .map-view { position: relative; height: 520px; background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(147,51,234,0.1) 100%); border-radius: 1rem; overflow: hidden; }
+        .map-grid { position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, transparent 1px, transparent 30px, rgba(255,255,255,0.05) 31px), repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0px, transparent 1px, transparent 30px, rgba(255,255,255,0.05) 31px); opacity: 0.3; }
+        .map-bus-marker { position: absolute; width: 32px; height: 32px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transform: translate(-50%, -50%); transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(59,130,246,0.4); z-index: 10; }
+        .map-bus-marker::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; background: #3b82f6; opacity: 0.3; animation: ping 2s infinite; }
+        .map-bus-marker.selected { background: #9333ea; box-shadow: 0 4px 20px rgba(147,51,234,0.6); transform: translate(-50%, -50%) scale(1.2); z-index: 20; }
+        .map-bus-marker.idle { background: #f59e0b; }
+        .map-bus-marker svg { width: 16px; height: 16px; fill: white; position: relative; z-index: 1; }
+        .marker-tooltip { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: rgba(15,15,20,0.95); backdrop-filter: blur(10px); padding: 0.5rem 0.75rem; border-radius: 0.5rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: all 0.3s ease; margin-bottom: 0.5rem; border: 1px solid rgba(255,255,255,0.1); }
+        .map-bus-marker:hover .marker-tooltip { opacity: 1; }
+        .tooltip-title { font-size: 0.75rem; font-weight: 600; margin-bottom: 0.125rem; }
+        .tooltip-speed { font-size: 0.625rem; color: var(--text-secondary); }
+        .buses-list { background: rgba(255,255,255,0.05); border-radius: 1.5rem; border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; max-height: 600px; overflow-y: auto; }
+        .buses-list h2 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .bus-card { background: rgba(255,255,255,0.05); border-radius: 1rem; padding: 1rem; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; }
+        .bus-card:hover { background: rgba(255,255,255,0.08); }
+        .bus-card.selected { border-color: #9333ea; background: rgba(147,51,234,0.1); }
+        .bus-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+        .bus-info { display: flex; align-items: center; gap: 0.75rem; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite; }
+        .status-dot.active { background: #22c55e; }
+        .status-dot.idle { background: #f59e0b; }
+        .bus-name { font-weight: 600; font-size: 0.875rem; }
+        .bus-id { font-size: 0.75rem; color: var(--text-secondary); }
+        .bus-eta { font-size: 0.875rem; font-weight: 600; color: #60a5fa; }
+        .bus-details { display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .detail-item { display: flex; align-items: center; gap: 0.5rem; }
+        .detail-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+        .bus-driver { font-size: 0.75rem; color: var(--text-secondary); padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        @media (max-width: 1024px) { .tracking-grid { grid-template-columns: 1fr; } .buses-list { max-height: 400px; } }
+        @media (max-width: 768px) { .tracking-stats { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body class="tracking-page">
+    
+    <!-- Navigation (Same as index.html) -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="10" rx="2"/>
+                            <path d="M7 11V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/>
+                            <circle cx="8" cy="18" r="1"/>
+                            <circle cx="16" cy="18" r="1"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">BusTracker Pro</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="features.html" class="nav-link">Features</a></li>
+                    <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                    <li><a href="tracking.html" class="nav-link active">Live Tracking</a></li>
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-text">Login</a>
+                    <a href="register.html" class="btn btn-primary">Get Started</a>
+                </div>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="tracking-header fade-in-up">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div>
+                    <h1>Live <span class="gradient-text">Bus Tracking</span></h1>
+                    <p style="color: var(--text-secondary);">Real-time monitoring of all school buses</p>
+                </div>
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    <span>Live</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="tracking-stats fade-in-up delay-100">
+            <div class="stat-box">
+                <div class="stat-value" style="color: #22c55e;" id="activeBuses">0</div>
+                <div class="stat-label">Active Buses</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: #60a5fa;" id="totalStudents">0</div>
+                <div class="stat-label">Total Students</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: #a855f7;" id="avgSpeed">0</div>
+                <div class="stat-label">Avg Speed</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: #facc15;" id="onTime">0</div>
+                <div class="stat-label">On Time</div>
+            </div>
+        </div>
+
+        <!-- Tracking Grid -->
+        <div class="tracking-grid fade-in-up delay-200">
+            <!-- Map View -->
+            <div class="map-container">
+                <div class="map-header">
+                    <h2>Live Map</h2>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Satellite</button>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Traffic</button>
+                    </div>
+                </div>
+                <div class="map-view" id="busMap">
+                    <div class="map-grid"></div>
+                    <!-- Bus markers will be added by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Bus List -->
+            <div class="buses-list">
+                <h2>Active Buses</h2>
+                <div id="busList">
+                    <!-- Bus cards will be added by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Same as index.html) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="10" rx="2"/>
+                                <path d="M7 11V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/>
+                            </svg>
+                        </div>
+                        <span class="logo-text">BusTracker Pro</span>
+                    </a>
+                    <p class="footer-description">Professional school bus tracking system for modern educational institutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="tracking.html">Live Tracking</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BusTracker Pro. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="faq.html">FAQ</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/tracking.js"></script>
+</body>
+</html>
