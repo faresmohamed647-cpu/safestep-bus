@@ -64,6 +64,249 @@
     }
     
     setActiveNavLink();
+
+    // ===================================
+    // SECTION IMAGE PLACEHOLDERS
+    // ===================================
+
+    function initImagePlaceholders() {
+        const pageKey = window.location.pathname.split('/').pop() || 'index.html';
+        const pageName = pageKey
+            .replace('.html', '')
+            .replace(/-/g, ' ');
+
+        const mediaLibrary = {
+            default: [
+                {
+                    src: 'img/aboutnew.jpg',
+                    alt: 'Students boarding a school bus',
+                    eyebrow: 'School Transport',
+                    title: 'Safer pickups and smoother boarding',
+                    caption: 'Use real transport visuals to make every section feel more convincing and polished.',
+                    tags: ['Live View', 'Student Safety'],
+                    metricValue: '24/7',
+                    metricLabel: 'Monitoring'
+                },
+                {
+                    src: 'img/feature1.jpg',
+                    alt: 'School bus tracking illustration',
+                    eyebrow: 'Tracking Flow',
+                    title: 'Clear app-style imagery for each feature',
+                    caption: 'Illustrative visuals fit feature, FAQ, login, and onboarding sections really well.',
+                    tags: ['GPS', 'Parents App'],
+                    metricValue: 'ETA',
+                    metricLabel: 'Updates'
+                },
+                {
+                    src: 'img/pack2.jpg',
+                    alt: 'School buses lined up',
+                    eyebrow: 'Fleet View',
+                    title: 'Fleet-focused visuals with stronger presence',
+                    caption: 'Large transport photos make the layout feel more premium than plain placeholder blocks.',
+                    tags: ['Fleet', 'Routes'],
+                    metricValue: '250+',
+                    metricLabel: 'Schools'
+                },
+                {
+                    src: 'img/service1.jpg',
+                    alt: 'Location pin on a digital map',
+                    eyebrow: 'Smart Routing',
+                    title: 'Map and route moments where they make sense',
+                    caption: 'Route visuals reinforce the tracking story in a cleaner and more purposeful way.',
+                    tags: ['Map', 'Tracking'],
+                    metricValue: 'GPS',
+                    metricLabel: 'Precision'
+                },
+                {
+                    src: 'img/service5.jpg',
+                    alt: 'Emergency alert on a mobile phone',
+                    eyebrow: 'Alerts',
+                    title: 'Important notifications highlighted visually',
+                    caption: 'Emergency and alert sections now feel like product moments instead of filler space.',
+                    tags: ['SOS', 'Alerts'],
+                    metricValue: 'Instant',
+                    metricLabel: 'Response'
+                },
+                {
+                    src: 'img/service6.jpg',
+                    alt: 'Shield and SSL security graphic',
+                    eyebrow: 'Security',
+                    title: 'Trust and safety details with better visual weight',
+                    caption: 'Security-themed imagery works well for pricing, login, and trust-building sections.',
+                    tags: ['Secure', 'Encrypted'],
+                    metricValue: 'SSL',
+                    metricLabel: 'Protected'
+                },
+                {
+                    src: 'img/service4.jpg',
+                    alt: 'Background check verification illustration',
+                    eyebrow: 'Compliance',
+                    title: 'Verification visuals for operations sections',
+                    caption: 'Helpful for admin, onboarding, and process-driven pages that need more clarity.',
+                    tags: ['Checks', 'Verified'],
+                    metricValue: '100%',
+                    metricLabel: 'Checked'
+                },
+                {
+                    src: 'img/map.png',
+                    alt: 'World map graphic',
+                    eyebrow: 'Coverage',
+                    title: 'Broader system coverage at a glance',
+                    caption: 'Map graphics help the dashboard and operations areas feel richer without clutter.',
+                    tags: ['Coverage', 'Scale'],
+                    metricValue: 'Global',
+                    metricLabel: 'Reach'
+                }
+            ],
+            'index.html': [0, 1, 3, 2],
+            'about.html': [0, 2, 6, 7, 1],
+            'features.html': [1, 3, 4, 5, 6],
+            'how-it-works.html': [1, 7, 3, 6, 2],
+            'tracking.html': [7, 3, 2],
+            'dashboard.html': [2, 7, 5],
+            'pricing.html': [5, 1, 2],
+            'contact.html': [0, 4, 3],
+            'faq.html': [1, 5, 4],
+            'login.html': [5, 1],
+            'register.html': [1, 5, 6]
+        };
+
+        const sectionImageIndexes = mediaLibrary[pageKey] || mediaLibrary.default.map((_, index) => index);
+
+        const placeholderTargets = [
+            'section',
+            '.tracking-header',
+            '.tracking-stats',
+            '.tracking-grid',
+            '.dash-header',
+            '.stats-grid',
+            '.main-grid',
+            '.bottom-grid',
+            '.auth-header',
+            '.auth-card',
+            '.trust-grid'
+        ];
+
+        const skipTargetMatchers = [
+            '.hero-image',
+            '.dashboard-preview',
+            '.map-container',
+            '.buses-list',
+            '.footer',
+            '.footer-content',
+            '.footer-bottom'
+        ];
+
+        const usedHosts = new Set();
+        const targets = document.querySelectorAll(placeholderTargets.join(', '));
+
+        targets.forEach((target, index) => {
+            if (!(target instanceof HTMLElement)) {
+                return;
+            }
+
+            if (skipTargetMatchers.some(selector => target.matches(selector))) {
+                return;
+            }
+
+            if (target.querySelector('.section-media-slot')) {
+                return;
+            }
+
+            const directContainer = target.firstElementChild;
+            const host = directContainer instanceof HTMLElement && directContainer.classList.contains('container')
+                ? directContainer
+                : target;
+
+            if (!(host instanceof HTMLElement) || usedHosts.has(host)) {
+                return;
+            }
+
+            if (host.closest('.footer')) {
+                return;
+            }
+
+            const hostTag = host.tagName.toLowerCase();
+            const isCompactTarget =
+                target.classList.contains('tracking-stats') ||
+                target.classList.contains('stats-grid') ||
+                target.classList.contains('trust-grid');
+
+            const tone = ['blue', 'purple', 'green'][index % 3];
+            const heading = target.querySelector('h1, h2, h3');
+            const titleText = heading
+                ? heading.textContent.replace(/\s+/g, ' ').trim()
+                : `${pageName} visual`;
+            const mediaIndex = sectionImageIndexes[index % sectionImageIndexes.length];
+            const media = mediaLibrary.default[mediaIndex];
+            const isIllustration = /\.(png|svg)$/i.test(media.src) || media.src.includes('feature1') || media.src.includes('service');
+            const noteTitle = isCompactTarget ? 'Quick Visual' : 'Featured Visual';
+            const noteText = isCompactTarget
+                ? 'Small image support keeps dense sections from looking flat.'
+                : media.caption;
+            const tagsMarkup = media.tags
+                .map(tag => `<span class="section-media-tag">${tag}</span>`)
+                .join('');
+
+            const placeholderMarkup = `
+                <div class="section-media-slot fade-in-up ${hostTag === 'div' ? 'inline-media-slot' : ''} ${isCompactTarget ? 'compact-media-slot' : ''}" data-media-tone="${tone}">
+                    <div class="section-media-shell">
+                        <div class="section-media-grid">
+                            <div class="section-media-preview">
+                                <img src="${media.src}" alt="${media.alt}" class="section-media-photo ${isIllustration ? 'is-illustration' : ''}" loading="lazy">
+                                <div class="section-media-scrim"></div>
+                                <div class="section-media-frame">
+                                    <span class="section-media-chip">${media.eyebrow}</span>
+                                    <div class="section-media-title">${titleText}</div>
+                                    <p class="section-media-caption">${media.caption}</p>
+                                    <div class="section-media-tags">
+                                        ${tagsMarkup}
+                                    </div>
+                                </div>
+                                <div class="section-media-metric">
+                                    <strong>${media.metricValue}</strong>
+                                    <span>${media.metricLabel}</span>
+                                </div>
+                            </div>
+                            <div class="section-media-notes" aria-hidden="true">
+                                <div class="section-media-note">
+                                    <div>
+                                        <strong>${noteTitle}</strong>
+                                        <span>${noteText}</span>
+                                    </div>
+                                </div>
+                                <div class="section-media-mini">
+                                    <img src="${media.src}" alt="" class="${isIllustration ? 'is-illustration' : ''}" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            host.insertAdjacentHTML('beforeend', placeholderMarkup);
+            usedHosts.add(host);
+        });
+    }
+
+    initImagePlaceholders();
+
+    function enhanceHomeHero() {
+        const previewMap = document.querySelector('.preview-map');
+        if (!(previewMap instanceof HTMLElement) || previewMap.querySelector('.preview-photo')) {
+            return;
+        }
+
+        previewMap.insertAdjacentHTML('afterbegin', `
+            <img src="img/aboutnew.jpg" alt="Students boarding a school bus" class="preview-photo" loading="eager">
+            <div class="preview-spotlight">
+                <strong>Morning Pickup</strong>
+                <span>Live boarding visibility</span>
+            </div>
+        `);
+    }
+
+    enhanceHomeHero();
     
     // ===================================
     // ANIMATED COUNTERS

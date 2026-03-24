@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - BusTracker Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .page-wrapper { padding-top: 80px; }
+        .page-hero { padding: 5rem 0; position: relative; overflow: hidden; text-align: center; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(30,64,175,0.15), transparent); pointer-events: none; }
+        .page-hero h1 { font-size: clamp(2.5rem, 6vw, 3.75rem); margin-bottom: 1.5rem; }
+        .page-hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 48rem; margin: 0 auto; }
+        .section-pad { padding: 5rem 0; }
+        .section-pad-alt { padding: 5rem 0; background: linear-gradient(to bottom, transparent, rgba(30,64,175,0.07)); }
+        .text-center { text-align: center; }
+
+        .contact-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .contact-info-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 1.5rem; text-align: center; text-decoration: none; color: inherit; transition: background 0.3s; display: block; }
+        .contact-info-card:hover { background: rgba(255,255,255,0.08); }
+        .contact-info-card:hover .ci-icon { transform: scale(1.1); }
+        .ci-icon { width: 56px; height: 56px; border-radius: 0.875rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; transition: transform 0.3s; }
+        .ci-icon svg { width: 28px; height: 28px; }
+        .ci-icon-blue { background: rgba(59,130,246,0.2); } .ci-icon-blue svg { stroke: #60a5fa; }
+        .ci-icon-green { background: rgba(34,197,94,0.2); } .ci-icon-green svg { stroke: #4ade80; }
+        .ci-icon-purple { background: rgba(147,51,234,0.2); } .ci-icon-purple svg { stroke: #c084fc; }
+        .ci-icon-yellow { background: rgba(234,179,8,0.2); } .ci-icon-yellow svg { stroke: #facc15; }
+        .contact-info-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .contact-info-card p { font-size: 0.875rem; color: var(--text-secondary); }
+
+        .contact-main { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        @media (max-width: 768px) { .contact-main { grid-template-columns: 1fr; } }
+
+        .glass-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 2rem; backdrop-filter: blur(10px); }
+        .glass-card h2 { font-size: 1.875rem; margin-bottom: 0.5rem; }
+        .glass-card > p { color: var(--text-secondary); margin-bottom: 2rem; }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+        label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; }
+        .form-input { width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; color: white; font-family: inherit; font-size: 0.875rem; transition: border-color 0.3s; outline: none; box-sizing: border-box; }
+        .form-input:focus { border-color: #3b82f6; }
+        .form-input::placeholder { color: var(--text-secondary); }
+        textarea.form-input { resize: none; }
+        .btn-submit { width: 100%; padding: 1rem; background: linear-gradient(135deg, #2563eb, #9333ea); border: none; border-radius: 0.5rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .btn-submit:hover { box-shadow: 0 10px 30px rgba(59,130,246,0.4); }
+        .btn-submit svg { width: 20px; height: 20px; stroke: white; }
+
+        .map-box { height: 20rem; background: linear-gradient(135deg, rgba(30,58,138,0.3), rgba(88,28,135,0.3)); border-radius: 0.75rem; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .map-box-grid { position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0px, transparent 1px, transparent 30px, rgba(255,255,255,0.06) 31px), repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0px, transparent 1px, transparent 30px, rgba(255,255,255,0.06) 31px); }
+        .map-box-inner { position: relative; z-index: 1; text-align: center; }
+        .map-box-inner svg { width: 64px; height: 64px; stroke: #60a5fa; margin-bottom: 1rem; }
+        .map-box-inner p { color: var(--text-secondary); font-size: 0.875rem; }
+
+        .quick-links-card { margin-top: 2rem; }
+        .quick-links-card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .quick-link-item { display: block; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; margin-bottom: 0.75rem; text-decoration: none; color: inherit; transition: background 0.3s; font-size: 0.875rem; }
+        .quick-link-item:hover { background: rgba(255,255,255,0.09); }
+
+        .cta-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 3rem; text-align: center; position: relative; overflow: hidden; }
+        .cta-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(147,51,234,0.06)); pointer-events: none; }
+        .cta-card h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .cta-card p { color: var(--text-secondary); font-size: 1.25rem; margin-bottom: 2rem; }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="10" rx="2"/>
+                            <path d="M7 11V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/>
+                            <circle cx="8" cy="18" r="1"/>
+                            <circle cx="16" cy="18" r="1"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">BusTracker Pro</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="features.html" class="nav-link">Features</a></li>
+                    <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                    <li><a href="tracking.html" class="nav-link">Live Tracking</a></li>
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-text">Login</a>
+                    <a href="register.html" class="btn btn-primary">Get Started</a>
+                </div>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <!-- Hero -->
+        <section class="page-hero">
+            <div class="container fade-in-up">
+                <h1>Get In <span class="gradient-text">Touch</span></h1>
+                <p>Have questions? We're here to help. Reach out to our team and we'll respond as soon as possible.</p>
+            </div>
+        </section>
+
+        <!-- Contact Info Cards -->
+        <section style="padding: 0 0 2rem;">
+            <div class="container">
+                <div class="contact-info-grid fade-in-up">
+                    <a href="mailto:info@bustracker.pro" class="contact-info-card">
+                        <div class="ci-icon ci-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                        <h3>Email Us</h3>
+                        <p>info@bustracker.pro</p>
+                    </a>
+                    <a href="tel:+15551234567" class="contact-info-card">
+                        <div class="ci-icon ci-icon-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                        <h3>Call Us</h3>
+                        <p>+1 (555) 123-4567</p>
+                    </a>
+                    <a href="#" class="contact-info-card">
+                        <div class="ci-icon ci-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                        <h3>Visit Us</h3>
+                        <p>123 Education Street, Tech City</p>
+                    </a>
+                    <a href="#" class="contact-info-card">
+                        <div class="ci-icon ci-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                        <h3>Business Hours</h3>
+                        <p>Mon-Fri: 9AM - 6PM</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form & Map -->
+        <section style="padding: 0 0 5rem;">
+            <div class="container">
+                <div class="contact-main">
+                    <!-- Form -->
+                    <div class="glass-card fade-in-up">
+                        <h2>Send Us a Message</h2>
+                        <p>Fill out the form and we'll get back to you within 24 hours</p>
+                        <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                            <div class="form-group">
+                                <label>Full Name *</label>
+                                <input type="text" required class="form-input" placeholder="John Doe">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email *</label>
+                                    <input type="email" required class="form-input" placeholder="john@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" class="form-input" placeholder="+1 (555) 123-4567">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Subject *</label>
+                                <input type="text" required class="form-input" placeholder="How can we help?">
+                            </div>
+                            <div class="form-group">
+                                <label>Message *</label>
+                                <textarea required class="form-input" rows="6" placeholder="Tell us more about your inquiry..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Map & Quick Links -->
+                    <div class="fade-in-up delay-100">
+                        <div class="glass-card">
+                            <h3 style="font-size:1.25rem; margin-bottom:1rem;">Our Location</h3>
+                            <div class="map-box">
+                                <div class="map-box-grid"></div>
+                                <div class="map-box-inner">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    <p>Interactive Map</p>
+                                    <p>123 Education Street, Tech City</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glass-card quick-links-card">
+                            <h3>Quick Links</h3>
+                            <a href="tracking.html" class="quick-link-item">Schedule a Demo &rarr;</a>
+                            <a href="pricing.html" class="quick-link-item">View Pricing &rarr;</a>
+                            <a href="faq.html" class="quick-link-item">Read FAQ &rarr;</a>
+                            <a href="#" class="quick-link-item">Support Center &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Urgent Support -->
+        <section class="section-pad-alt">
+            <div class="container">
+                <div class="cta-card fade-in-up" style="max-width:56rem; margin:0 auto;">
+                    <h2>Need Immediate Assistance?</h2>
+                    <p>Our support team is available 24/7 for urgent matters</p>
+                    <div class="btn-group">
+                        <a href="tel:+15551234567" class="btn btn-primary btn-lg">Call Support</a>
+                        <a href="#" class="btn btn-secondary btn-lg">Live Chat</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/></svg></div>
+                        <span class="logo-text">BusTracker Pro</span>
+                    </a>
+                    <p class="footer-description">Professional school bus tracking system for modern educational institutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="tracking.html">Live Tracking</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BusTracker Pro. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="faq.html">FAQ</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>

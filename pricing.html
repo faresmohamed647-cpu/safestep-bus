@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - BusTracker Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .page-wrapper { padding-top: 80px; }
+        .page-hero { padding: 5rem 0; position: relative; overflow: hidden; text-align: center; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(30,64,175,0.15), transparent); pointer-events: none; }
+        .page-hero h1 { font-size: clamp(2.5rem, 6vw, 3.75rem); margin-bottom: 1.5rem; }
+        .page-hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 48rem; margin: 0 auto; }
+        .badge-pill { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 9999px; margin-bottom: 1.5rem; font-size: 0.875rem; color: #93c5fd; }
+        .section-pad { padding: 0 0 5rem; }
+        .section-pad-faq { padding: 5rem 0; background: linear-gradient(to bottom, transparent, rgba(30,64,175,0.07)); }
+        .text-center { text-align: center; }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: start; }
+        .pricing-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 2rem; transition: background 0.3s; position: relative; }
+        .pricing-card:hover { background: rgba(255,255,255,0.08); }
+        .pricing-card.popular { border-color: rgba(147,51,234,0.5); border-width: 2px; }
+        .popular-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); padding: 0.25rem 1rem; background: linear-gradient(135deg, #2563eb, #9333ea); border-radius: 9999px; font-size: 0.875rem; font-weight: 600; white-space: nowrap; }
+        .pricing-header { text-align: center; margin-bottom: 2rem; }
+        .pricing-header h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .pricing-header .desc { color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1.5rem; }
+        .price-row { display: flex; align-items: flex-end; justify-content: center; gap: 0.25rem; margin-bottom: 0.5rem; }
+        .price-currency { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .price-amount { font-size: 3rem; font-weight: 800; }
+        .price-period { font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .price-note { font-size: 0.875rem; color: var(--text-secondary); }
+        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+        .feature-list li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.875rem; color: #d1d5db; }
+        .check-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+        .check-icon-blue { background: rgba(59,130,246,0.2); }
+        .check-icon-purple { background: rgba(147,51,234,0.2); }
+        .check-icon-yellow { background: rgba(234,179,8,0.2); }
+        .check-icon svg { width: 12px; height: 12px; }
+        .check-icon-blue svg { stroke: #60a5fa; }
+        .check-icon-purple svg { stroke: #c084fc; }
+        .check-icon-yellow svg { stroke: #facc15; }
+        .btn-plan { width: 100%; padding: 1rem; border-radius: 0.5rem; font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; border: none; }
+        .btn-plan-primary { background: linear-gradient(135deg, #2563eb, #9333ea); color: white; }
+        .btn-plan-primary:hover { box-shadow: 0 10px 30px rgba(147,51,234,0.4); }
+        .btn-plan-secondary { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; }
+        .btn-plan-secondary:hover { background: rgba(255,255,255,0.09); }
+
+        .faq-preview { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 3rem; text-align: center; max-width: 56rem; margin: 0 auto; }
+        .faq-preview h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .faq-preview p { color: var(--text-secondary); font-size: 1.25rem; margin-bottom: 2rem; }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        .compare-table th, .compare-table td { padding: 1rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .compare-table th:first-child, .compare-table td:first-child { text-align: left; }
+        .compare-table thead th { font-weight: 700; font-size: 1rem; color: white; }
+        .compare-table tbody td { color: var(--text-secondary); }
+        .compare-table tbody td:first-child { color: white; }
+        .check-yes { color: #4ade80; font-size: 1.25rem; }
+        .check-no { color: var(--text-tertiary); }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="10" rx="2"/>
+                            <path d="M7 11V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/>
+                            <circle cx="8" cy="18" r="1"/>
+                            <circle cx="16" cy="18" r="1"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">BusTracker Pro</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="features.html" class="nav-link">Features</a></li>
+                    <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                    <li><a href="tracking.html" class="nav-link">Live Tracking</a></li>
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="pricing.html" class="nav-link active">Pricing</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-text">Login</a>
+                    <a href="register.html" class="btn btn-primary">Get Started</a>
+                </div>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <!-- Hero -->
+        <section class="page-hero">
+            <div class="container fade-in-up">
+                <div class="badge-pill">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Simple, Transparent Pricing
+                </div>
+                <h1>Choose Your <span class="gradient-text">Perfect Plan</span></h1>
+                <p>Start with a 30-day free trial. No credit card required. Cancel anytime.</p>
+            </div>
+        </section>
+
+        <!-- Pricing Cards -->
+        <section class="section-pad">
+            <div class="container">
+                <div class="pricing-grid fade-in-up">
+                    <!-- Starter -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Starter</h3>
+                            <p class="desc">Perfect for small schools getting started</p>
+                            <div class="price-row">
+                                <span class="price-currency">$</span>
+                                <span class="price-amount">99</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <p class="price-note">Billed monthly or annually</p>
+                        </div>
+                        <ul class="feature-list">
+                            <li><div class="check-icon check-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Up to 5 buses</li>
+                            <li><div class="check-icon check-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Up to 150 students</li>
+                            <li><div class="check-icon check-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Real-time GPS tracking</li>
+                            <li><div class="check-icon check-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Basic notifications</li>
+                            <li><div class="check-icon check-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Parent mobile app</li>
+                            <li><div class="check-icon check-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Email support</li>
+                            <li><div class="check-icon check-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> 30-day free trial</li>
+                        </ul>
+                        <button class="btn-plan btn-plan-secondary" onclick="alert('Start your free trial today!')">Start Free Trial</button>
+                    </div>
+
+                    <!-- Professional -->
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">Most Popular</div>
+                        <div class="pricing-header">
+                            <h3>Professional</h3>
+                            <p class="desc">Best for growing institutions</p>
+                            <div class="price-row">
+                                <span class="price-currency">$</span>
+                                <span class="price-amount">249</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            <p class="price-note">Billed monthly or annually</p>
+                        </div>
+                        <ul class="feature-list">
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Up to 20 buses</li>
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Up to 600 students</li>
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Real-time GPS tracking</li>
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Advanced notifications</li>
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Parent &amp; driver apps</li>
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Route optimization</li>
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Analytics &amp; reports</li>
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Priority support</li>
+                            <li><div class="check-icon check-icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> API access</li>
+                        </ul>
+                        <button class="btn-plan btn-plan-primary" onclick="window.location='register.html'">Get Started</button>
+                    </div>
+
+                    <!-- Enterprise -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Enterprise</h3>
+                            <p class="desc">For large schools and districts</p>
+                            <div class="price-row">
+                                <span class="price-amount" style="font-size:2.5rem;">Custom</span>
+                            </div>
+                            <p class="price-note">Contact us for pricing</p>
+                        </div>
+                        <ul class="feature-list">
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Unlimited buses</li>
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Unlimited students</li>
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> All mobile apps</li>
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Advanced route optimization</li>
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Custom analytics</li>
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Dedicated account manager</li>
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> Custom integrations</li>
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> On-site training</li>
+                            <li><div class="check-icon check-icon-yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div> 24/7 phone support</li>
+                        </ul>
+                        <button class="btn-plan btn-plan-secondary" onclick="window.location='contact.html'">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Preview -->
+        <section class="section-pad-faq">
+            <div class="container">
+                <div class="faq-preview fade-in-up">
+                    <h2>Have Questions About <span class="gradient-text">Pricing?</span></h2>
+                    <p>Check our FAQ or contact our sales team for a personalized quote</p>
+                    <div class="btn-group">
+                        <a href="faq.html" class="btn btn-secondary btn-lg">View FAQ</a>
+                        <a href="contact.html" class="btn btn-primary btn-lg">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/></svg></div>
+                        <span class="logo-text">BusTracker Pro</span>
+                    </a>
+                    <p class="footer-description">Professional school bus tracking system for modern educational institutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="tracking.html">Live Tracking</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BusTracker Pro. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="faq.html">FAQ</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - BusTracker Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        .page-wrapper { padding-top: 80px; }
+        .page-hero { padding: 5rem 0; position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(30,64,175,0.15), transparent); pointer-events: none; }
+        .page-hero h1 { font-size: clamp(2.5rem, 6vw, 3.75rem); margin-bottom: 1.5rem; }
+        .page-hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 48rem; margin: 0 auto; line-height: 1.8; }
+        .text-center { text-align: center; }
+        .section-pad { padding: 5rem 0; }
+        .section-pad-alt { padding: 5rem 0; background: linear-gradient(to bottom, transparent, rgba(30,64,175,0.07)); }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; }
+
+        .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 2rem; backdrop-filter: blur(10px); transition: background 0.3s ease; }
+        .card:hover { background: rgba(255,255,255,0.08); }
+
+        .icon-box { width: 64px; height: 64px; background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(147,51,234,0.2)); border-radius: 0.875rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+        .icon-box svg { width: 32px; height: 32px; color: #60a5fa; }
+        .icon-box-purple svg { color: #c084fc; }
+
+        .stat-item-about { text-align: center; }
+        .stat-item-about .stat-val { font-size: 2.5rem; font-weight: 800; background: linear-gradient(to right, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+        .stat-item-about .stat-lbl { color: var(--text-secondary); }
+
+        .story-card { padding: 3rem; }
+        .story-card p { color: var(--text-secondary); font-size: 1.125rem; line-height: 1.9; margin-bottom: 1.5rem; }
+
+        .cta-card { padding: 3rem; text-align: center; }
+        .cta-card h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .cta-card p { color: var(--text-secondary); font-size: 1.25rem; margin-bottom: 2rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="10" rx="2"/>
+                            <path d="M7 11V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/>
+                            <circle cx="8" cy="18" r="1"/>
+                            <circle cx="16" cy="18" r="1"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">BusTracker Pro</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link active">About</a></li>
+                    <li><a href="features.html" class="nav-link">Features</a></li>
+                    <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                    <li><a href="tracking.html" class="nav-link">Live Tracking</a></li>
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="login.html" class="btn btn-text">Login</a>
+                    <a href="register.html" class="btn btn-primary">Get Started</a>
+                </div>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <!-- Hero -->
+        <section class="page-hero">
+            <div class="container text-center">
+                <h1 class="fade-in-up">About <span class="gradient-text">BusTracker Pro</span></h1>
+                <p class="fade-in-up delay-100">
+                    We're revolutionizing school transportation with cutting-edge technology that ensures 
+                    student safety, operational efficiency, and peace of mind for parents and administrators.
+                </p>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="section-pad-alt">
+            <div class="container">
+                <div class="grid-2">
+                    <div class="card fade-in-up">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h2 style="font-size:1.875rem; margin-bottom:1rem;">Our Mission</h2>
+                        <p style="color:var(--text-secondary); font-size:1.125rem; line-height:1.8;">
+                            To provide educational institutions with a reliable, efficient, and user-friendly 
+                            school bus tracking system that prioritizes student safety while streamlining 
+                            transportation operations. We believe every child deserves a safe journey to and 
+                            from school, and every parent deserves peace of mind.
+                        </p>
+                    </div>
+                    <div class="card fade-in-up delay-100">
+                        <div class="icon-box icon-box-purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h2 style="font-size:1.875rem; margin-bottom:1rem;">Our Vision</h2>
+                        <p style="color:var(--text-secondary); font-size:1.125rem; line-height:1.8;">
+                            To become the global leader in school transportation technology, setting new 
+                            standards for safety, reliability, and innovation. We envision a future where 
+                            every school has access to advanced tracking systems that make transportation 
+                            management seamless and transparent.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Values -->
+        <section class="section-pad">
+            <div class="container">
+                <div class="section-header fade-in-up text-center" style="margin-bottom:4rem;">
+                    <h2>Our Core <span class="gradient-text">Values</span></h2>
+                    <p style="color:var(--text-secondary); font-size:1.25rem; margin-top:1rem;">The principles that guide everything we do</p>
+                </div>
+                <div class="grid-3">
+                    <div class="card fade-in-up text-center">
+                        <div class="icon-box" style="margin:0 auto 1.5rem;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <h3 style="font-size:1.25rem; margin-bottom:0.75rem;">Safety First</h3>
+                        <p style="color:var(--text-secondary);">Student safety is our top priority. Every feature is designed with security and protection in mind.</p>
+                    </div>
+                    <div class="card fade-in-up delay-100 text-center">
+                        <div class="icon-box" style="margin:0 auto 1.5rem;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        </div>
+                        <h3 style="font-size:1.25rem; margin-bottom:0.75rem;">Innovation</h3>
+                        <p style="color:var(--text-secondary);">We continuously innovate and improve our platform using the latest technology and user feedback.</p>
+                    </div>
+                    <div class="card fade-in-up delay-200 text-center">
+                        <div class="icon-box" style="margin:0 auto 1.5rem;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <h3 style="font-size:1.25rem; margin-bottom:0.75rem;">Customer Focus</h3>
+                        <p style="color:var(--text-secondary);">We listen to our users and build solutions that truly address their needs and challenges.</p>
+                    </div>
+                    <div class="card fade-in-up delay-300 text-center">
+                        <div class="icon-box" style="margin:0 auto 1.5rem;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        </div>
+                        <h3 style="font-size:1.25rem; margin-bottom:0.75rem;">Excellence</h3>
+                        <p style="color:var(--text-secondary);">We strive for excellence in every aspect of our service, from technology to customer support.</p>
+                    </div>
+                    <div class="card fade-in-up delay-400 text-center">
+                        <div class="icon-box" style="margin:0 auto 1.5rem;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h3 style="font-size:1.25rem; margin-bottom:0.75rem;">Reliability</h3>
+                        <p style="color:var(--text-secondary);">99.9% uptime guarantee. Our system is built to be dependable when it matters most.</p>
+                    </div>
+                    <div class="card fade-in-up delay-500 text-center">
+                        <div class="icon-box" style="margin:0 auto 1.5rem;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h3 style="font-size:1.25rem; margin-bottom:0.75rem;">Transparency</h3>
+                        <p style="color:var(--text-secondary);">Clear communication, honest pricing, and open dialogue with all our stakeholders.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Story -->
+        <section class="section-pad-alt">
+            <div class="container">
+                <div class="card story-card fade-in-up" style="max-width:56rem; margin:0 auto;">
+                    <h2 class="text-center" style="font-size:2.5rem; margin-bottom:2rem;">Our Story</h2>
+                    <p>
+                        BusTracker Pro was founded in 2020 by a team of educators, parents, and technology 
+                        experts who recognized the critical need for better school transportation management. 
+                        After witnessing the challenges schools face in coordinating bus routes, ensuring 
+                        student safety, and communicating with parents, we set out to create a comprehensive solution.
+                    </p>
+                    <p>
+                        What started as a simple GPS tracking tool has evolved into a full-featured platform 
+                        that serves over 250 schools and tracks more than 15,000 students daily. Our growth 
+                        has been driven by our commitment to listening to our users and continuously improving our service.
+                    </p>
+                    <p style="margin-bottom:0;">
+                        Today, BusTracker Pro is trusted by educational institutions across the country. Our 
+                        team of 50+ dedicated professionals works tirelessly to ensure that every school bus 
+                        journey is safe, efficient, and transparent.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="section-pad">
+            <div class="container">
+                <div class="section-header fade-in-up text-center" style="margin-bottom:4rem;">
+                    <h2>By The <span class="gradient-text">Numbers</span></h2>
+                    <p style="color:var(--text-secondary); font-size:1.25rem; margin-top:1rem;">Our impact in the education sector</p>
+                </div>
+                <div class="grid-4">
+                    <div class="stat-item-about fade-in-up"><div class="stat-val">2020</div><div class="stat-lbl">Founded</div></div>
+                    <div class="stat-item-about fade-in-up delay-100"><div class="stat-val">250+</div><div class="stat-lbl">Partner Schools</div></div>
+                    <div class="stat-item-about fade-in-up delay-200"><div class="stat-val">15K+</div><div class="stat-lbl">Students Tracked</div></div>
+                    <div class="stat-item-about fade-in-up delay-300"><div class="stat-val">99.9%</div><div class="stat-lbl">Uptime</div></div>
+                    <div class="stat-item-about fade-in-up delay-400"><div class="stat-val">50+</div><div class="stat-lbl">Team Members</div></div>
+                    <div class="stat-item-about fade-in-up delay-500"><div class="stat-val">24/7</div><div class="stat-lbl">Support</div></div>
+                    <div class="stat-item-about fade-in-up"><div class="stat-val">98%</div><div class="stat-lbl">Satisfaction</div></div>
+                    <div class="stat-item-about fade-in-up delay-100"><div class="stat-val">500+</div><div class="stat-lbl">Active Buses</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="section-pad">
+            <div class="container">
+                <div class="card cta-card fade-in-up" style="max-width:56rem; margin:0 auto; position:relative; overflow:hidden;">
+                    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(59,130,246,0.08), rgba(147,51,234,0.08)); pointer-events:none;"></div>
+                    <h2>Join Our Journey</h2>
+                    <p>Be part of the future of school transportation</p>
+                    <a href="contact.html" class="btn btn-primary btn-lg">Get In Touch</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="10" rx="2"/>
+                                <path d="M7 11V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/>
+                            </svg>
+                        </div>
+                        <span class="logo-text">BusTracker Pro</span>
+                    </a>
+                    <p class="footer-description">Professional school bus tracking system for modern educational institutions. Real-time monitoring, safety, and peace of mind.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="tracking.html">Live Tracking</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="drivers.html">Drivers Management</a></li>
+                        <li><a href="students.html">Students Management</a></li>
+                        <li><a href="parents.html">Parents Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="footer-contact">
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>123 Education Street, Tech City, TC 12345</span></li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+1 (555) 123-4567</span></li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>info@bustracker.pro</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BusTracker Pro. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="faq.html">FAQ</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
